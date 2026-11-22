@@ -95,7 +95,9 @@ def top(counter, n=15):
 
 
 def top_all(counter):
-    return [{"key": k, "count": c} for k, c in counter.most_common()]
+    """Every entry, most first; equal counts in alphabetical order (case-insensitive)."""
+    rows = sorted(counter.items(), key=lambda kc: (-kc[1], kc[0].casefold(), kc[0]))
+    return [{"key": k, "count": c} for k, c in rows]
 
 
 def hour_series(counter):
@@ -630,7 +632,7 @@ function setupGreyNoise() {
 }
 
 // ---- Username panel with search ----
-let userRows = [];   // latest by_user data, sorted by count (from the server)
+let userRows = [];   // latest by_user data, sorted by count, then A–Z (from the server)
 let userQuery = '';  // survives auto-refresh re-renders
 
 function highlightMatch(text, q) {
